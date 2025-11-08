@@ -10,11 +10,11 @@ from websockets.asyncio.client import connect
 
 from dependency_injector.wiring import inject, Provide
 
-from .stream import Stream
-from ..handler_dispatcher import HandlerDispatcher
+from .logger import Logger
+from .handler_dispatcher import HandlerDispatcher
 
 
-class BitflyerLightningStream(Stream):
+class Stream:
     async def send_public_subscriptions(self, websocket):
         for channel in self.public_channels:
             await websocket.send(json.dumps({
@@ -75,12 +75,27 @@ class BitflyerLightningStream(Stream):
             except websockets.exceptions.ConnectionClosed:
                 self.logger.system.info("WebSocket connection closed.")
     
+    def pause(self):
+        """
+        Stop the stream.
+        """
+        self.paused = True
+        self.logger.system.info("The stream is paused.")
+    
+    def resume(self):
+        """
+        Resume the stream.
+        """
+        self.paused = False
+        self.logger.system.info("The stream is resumed.")
+    
     @inject
     def __init__(self,
                  url: str,
                  api_key: str,
                  api_secret: str,
                  handler_dispatcher: HandlerDispatcher = Provide['handler_dispatcher'],
+                 logger: Logger = Provide['logger'],
                  config: dict = Provide['config']):
         """
         Initialize the WebSocket client.
@@ -90,12 +105,12 @@ class BitflyerLightningStream(Stream):
         :param handler_dispatcher: The handler dispatcher service to handle incoming messages.
         :param config: The application container configuration dictionary.
         """
-        super().__init__()
-        
         self.url = url
         self._api_key = api_key
         self._api_secret = api_secret
         self.handler_dispatcher = handler_dispatcher
+        self.logger = logger
+        self.paused = False
         
         crypto_currency_code = config.get('crypto_currency_code')
         self.public_channels = [

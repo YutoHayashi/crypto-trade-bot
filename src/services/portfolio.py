@@ -2,7 +2,7 @@ import asyncio
 
 from dependency_injector.wiring import inject, Provide
 
-from .exchange_clients import ExchangeClient
+from .exchange_client import ExchangeClient
 
 
 class Portfolio:
@@ -20,7 +20,7 @@ class Portfolio:
         """
         Synchronize the portfolio data.
         This method can be extended to fetch and update portfolio data from an external source.
-        :param exchange_client: The Bitflyer client for fetching balance and collateral.
+        :param exchange_client: The ExchangeClient for fetching balance and collateral.
         """
         async with self.lock:
             balance = exchange_client.get_balance()

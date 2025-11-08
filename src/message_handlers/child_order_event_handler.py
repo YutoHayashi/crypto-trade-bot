@@ -5,7 +5,7 @@ from dependency_injector.wiring import inject, Provide
 from services.portfolio import Portfolio
 from services.order_book import Order, OrderBook
 from services.position_book import Position, PositionBook
-from services.exchange_clients import TransactionException
+from services.exchange_client import TransactionException
 from .message_handler import MessageHandler
 
 

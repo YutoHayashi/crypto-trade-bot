@@ -2,8 +2,8 @@ from enum import Enum
 
 from dependency_injector.wiring import Provide, inject
 
-from services.exchange_clients.exchange_client import ExchangeClient
-from services.streams.stream import Stream
+from services.exchange_client import ExchangeClient
+from services.stream import Stream
 from .batch_task import BatchTask
 
 

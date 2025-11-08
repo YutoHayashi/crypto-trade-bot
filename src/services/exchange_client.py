@@ -7,10 +7,15 @@ from urllib.parse import urlencode
 
 import requests
 
-from .exchange_client import ExchangeClient
+from services.exception import RuntimeException
 
 
-class BitflyerLightningClient(ExchangeClient):
+class TransactionException(RuntimeException):
+    """Base exception for transaction errors."""
+    _title = "Transaction Exception"
+
+
+class ExchangeClient:
     exchange_name = "bitflyer Lightning"
     
     def get_ticker(self, symbol: str) -> dict:
@@ -139,7 +144,7 @@ class BitflyerLightningClient(ExchangeClient):
     
     def __init__(self, base_url: str, api_key: str, api_secret: str):
         """
-        Initializes the BitflyerApiClient with API credentials and base URL.
+        Initializes the ExchangeClient with API credentials and base URL.
         """
         self.base_url = base_url
         self._api_key = api_key

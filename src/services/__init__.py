@@ -1,5 +1,5 @@
-from .exchange_clients import BitflyerLightningClient
-from .streams import BitflyerLightningStream
+from .exchange_client import ExchangeClient
+from .stream import Stream
 from .logger import Logger
 from .batch import Batch
 from .s3client import S3Client, S3ClientException
@@ -12,8 +12,8 @@ from .handler_dispatcher import HandlerDispatcher
 
 
 __all__ = [
-    'BitflyerLightningClient',
-    'BitflyerLightningStream',
+    'ExchangeClient',
+    'Stream',
     'Logger',
     'Batch',
     'S3Client',

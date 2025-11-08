@@ -30,14 +30,14 @@ class ApplicationContainer(containers.DeclarativeContainer):
     
     # Services
     exchange_client = providers.Factory(
-        services.BitflyerLightningClient,
+        services.ExchangeClient,
         base_url=config.bitflyer_api_base_url,
         api_key=config.bitflyer_api_key,
         api_secret=config.bitflyer_api_secret
     )
     
     stream = providers.Singleton(
-        services.BitflyerLightningStream,
+        services.Stream,
         url=config.bitflyer_websocket_url,
         api_key=config.bitflyer_api_key,
         api_secret=config.bitflyer_api_secret
@@ -71,7 +71,7 @@ class ApplicationContainer(containers.DeclarativeContainer):
     
     position_book = providers.Singleton(services.PositionBook)
     
-    data_buffer = providers.Singleton(
+    data_store = providers.Singleton(
         services.DataStore,
         max_size=config.data_store_size
     )

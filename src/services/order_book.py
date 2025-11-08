@@ -4,7 +4,7 @@ import asyncio
 
 from dependency_injector.wiring import inject, Provide
 
-from .exchange_clients import ExchangeClient
+from .exchange_client import ExchangeClient
 
 
 @dataclasses.dataclass
@@ -41,7 +41,7 @@ class OrderBook:
         """
         Synchronize the order book data.
         This method can be extended to fetch and update order book data from an external source.
-        :param exchange_client: The Bitflyer client for fetching order book data.
+        :param exchange_client: The ExchangeClient for fetching order book data.
         """
         async with self.lock:
             orders = exchange_client.get_orders(symbol=self.crypto_currency_code, order_state='ACTIVE')

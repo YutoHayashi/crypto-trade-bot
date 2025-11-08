@@ -4,7 +4,7 @@ import asyncio
 
 from dependency_injector.wiring import inject, Provide
 
-from .exchange_clients import ExchangeClient
+from .exchange_client import ExchangeClient
 
 
 @dataclasses.dataclass
@@ -35,7 +35,7 @@ class PositionBook:
         """
         Synchronize the position book data.
         This method can be extended to fetch and update position book data from an external source.
-        :param exchange_client: The Bitflyer client for fetching position book data.
+        :param exchange_client: The ExchangeClient for fetching position book data.
         """
         async with self.lock:
             positions = exchange_client.get_positions(symbol=self.crypto_currency_code)
