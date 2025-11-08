@@ -1,0 +1,34 @@
+from abc import ABC, abstractmethod
+
+from dependency_injector.wiring import Provide, inject
+
+from services.logger import Logger
+
+
+class Agent(ABC):
+    """
+    Abstract base class for agents.
+    Agents are responsible for executing tasks and managing their own state.
+    """
+    
+    @abstractmethod
+    def get_action(self, states: list) -> int:
+        """
+        Get the action to be taken based on the current state.
+        :param states: The current state of the agent.
+        :return: The action to be taken.
+        """
+        pass
+    
+    @abstractmethod
+    def action(self, action: int) -> None:
+        """
+        Execute the given action.
+        :param action: The action to be executed.
+        """
+        pass
+    
+    @inject
+    def __init__(self,
+                 logger: Logger = Provide['logger']):
+        self.logger = logger

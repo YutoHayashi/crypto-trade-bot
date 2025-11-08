@@ -1,0 +1,12 @@
+boto3
+dependency-injector
+numpy
+pandas
+python-dotenv
+rel
+requests
+scikit-learn
+torch
+torchrl
+torchvision
+websockets
