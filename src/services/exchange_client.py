@@ -122,6 +122,18 @@ class ExchangeClient:
         response = requests.get(self.base_url + path, params=params, headers=headers)
         return response.json()
     
+    def get_trading_commission(self, symbol: str) -> dict:
+        """
+        Fetches the trading commission for a given symbol.
+        :param symbol: The product code for which to fetch the trading commission.
+        :return: A dictionary containing trading commission information.
+        """
+        path = "/v1/me/gettradingcommission"
+        params = {"product_code": symbol}
+        headers = self._get_auth_headers('get', path, params=params)
+        response = requests.get(self.base_url + path, params=params, headers=headers)
+        return response.json()
+    
     def _get_auth_headers(self, method: Literal["post", "get"], path: str, params: dict = {}, data: str = '') -> dict:
         """
         Generates authentication headers for API requests.
