@@ -8,7 +8,7 @@ from .logger import Logger
 
 
 class Batch:
-    max_count: int = 3600  # 1 hour
+    max_count: int = 86400  # 1 day
     count: int = 0
     tasks: List[BatchTask]
     
