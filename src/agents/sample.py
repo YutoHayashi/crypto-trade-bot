@@ -11,10 +11,10 @@ class Action(Enum):
 
 
 class RandomAgent(Agent):
-    def get_action(self, states: list) -> Action:
+    async def get_action(self, states: list) -> Action:
         return random.choice(list(Action))
     
-    def action(self, action: Action) -> None:
+    async def action(self, action: Action) -> None:
         match action:
             case Action.DO_NOTHING:
                 print("Doing nothing.")

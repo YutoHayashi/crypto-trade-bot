@@ -12,7 +12,7 @@ class Agent(ABC):
     """
     
     @abstractmethod
-    def get_action(self, states: list) -> int:
+    async def get_action(self, states: list) -> int:
         """
         Get the action to be taken based on the current state.
         :param states: The current state of the agent.
@@ -21,7 +21,7 @@ class Agent(ABC):
         pass
     
     @abstractmethod
-    def action(self, action: int) -> None:
+    async def action(self, action: int) -> None:
         """
         Execute the given action.
         :param action: The action to be executed.

@@ -28,8 +28,8 @@ class BoardEventHandler(MessageHandler):
         data_store.append(data)
         
         if (len(data_store) == data_store.max_size):
-            action = agent.get_action(data_store.get_data())
-            agent.action(action)
+            action = await agent.get_action(data_store.get_data())
+            await agent.action(action)
     
     def __init__(self):
         """
