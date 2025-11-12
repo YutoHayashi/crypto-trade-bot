@@ -30,5 +30,8 @@ class Agent(ABC):
     
     @inject
     def __init__(self,
-                 logger: Logger = Provide['logger']):
+                 logger: Logger = Provide['logger'],
+                 config: dict = Provide['config']):
         self.logger = logger
+        self.crypto_currency_code = config.get('crypto_currency_code')
+        self.model_path = config.get('model_path')

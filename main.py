@@ -124,6 +124,7 @@ def main() -> None:
     container.config.line_messaging_api_base_url.from_env('LINE_MESSAGING_API_BASE_URL')
     container.config.line_messaging_api_channel_token.from_env('LINE_MESSAGING_API_CHANNEL_TOKEN')
     container.config.line_messaging_api_destination_user_id.from_env('LINE_MESSAGING_API_DESTINATION_USER_ID')
+    container.config.model_path.from_env('MODEL_PATH')
     
     container.wire()
     

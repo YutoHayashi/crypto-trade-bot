@@ -82,7 +82,7 @@ class ExchangeClient:
         response = requests.post(self.base_url + path, data=data, headers=headers)
         return response.json()
     
-    def cancel_order(self, order_id: str, symbol: str = None) -> dict:
+    def cancel_order(self, order_id: str = None, child_order_acceptance_id: str = None, symbol: str = None) -> dict:
         """
         Cancels an existing order.
         :param order_id: The ID of the order to cancel.
@@ -90,10 +90,16 @@ class ExchangeClient:
         :return: A dictionary containing the cancellation response.
         """
         path = '/v1/me/cancelchildorder'
-        data = json.dumps({
-            "product_code": symbol,
-            "child_order_id": order_id,
-        })
+        if order_id:
+            data = json.dumps({
+                "product_code": symbol,
+                "order_id": order_id,
+            })
+        elif child_order_acceptance_id:
+            data = json.dumps({
+                "product_code": symbol,
+                "child_order_acceptance_id": child_order_acceptance_id,
+            })
         headers = self._get_auth_headers('post', path, data=data)
         response = requests.post(self.base_url + path, data=data, headers=headers)
         return response.json()
