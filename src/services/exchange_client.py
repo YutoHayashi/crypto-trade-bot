@@ -82,7 +82,7 @@ class ExchangeClient:
         response = requests.post(self.base_url + path, data=data, headers=headers)
         return response.json()
     
-    def cancel_order(self, order_id: str = None, child_order_acceptance_id: str = None, symbol: str = None) -> dict:
+    def cancel_order(self, symbol: str, order_id: str = None, child_order_acceptance_id: str = None) -> dict:
         """
         Cancels an existing order.
         :param order_id: The ID of the order to cancel.
@@ -102,7 +102,7 @@ class ExchangeClient:
             })
         headers = self._get_auth_headers('post', path, data=data)
         response = requests.post(self.base_url + path, data=data, headers=headers)
-        return response.json()
+        return True
     
     def get_orders(self, symbol: str, order_state: str = None) -> list:
         """
@@ -124,6 +124,24 @@ class ExchangeClient:
         """
         path = "/v1/me/getpositions"
         params = {"product_code": symbol}
+        headers = self._get_auth_headers('get', path, params=params)
+        response = requests.get(self.base_url + path, params=params, headers=headers)
+        return response.json()
+    
+    def get_collateral_history(self, count: int = 100, before: int = None, after: int = None) -> list:
+        """
+        Fetches the collateral history of the account.
+        :param count: The number of records to fetch.
+        :param before: The ID of the record before which to fetch.
+        :param after: The ID of the record after which to fetch.
+        :return: A list containing the collateral history records.
+        """
+        path = "/v1/me/getcollateralhistory"
+        params = {"count": count}
+        if before is not None:
+            params["before"] = before
+        if after is not None:
+            params["after"] = after
         headers = self._get_auth_headers('get', path, params=params)
         response = requests.get(self.base_url + path, params=params, headers=headers)
         return response.json()
