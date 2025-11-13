@@ -13,7 +13,7 @@ class BatchTask(ABC):
         Get the interval in seconds at which to run the task.
         :return: The interval in seconds.
         """
-        return 1
+        return 600  # Default to 10 minutes
     
     @abstractmethod
     async def __call__(self):
@@ -24,5 +24,8 @@ class BatchTask(ABC):
     
     @inject
     def __init__(self,
-                 logger: Logger = Provide['logger']):
+                 logger: Logger = Provide['logger'],
+                 config: dict = Provide['config']):
         self.logger = logger
+        self.legal_currency_code = config.get('legal_currency_code')
+        self.crypto_currency_code = config.get('crypto_currency_code')
