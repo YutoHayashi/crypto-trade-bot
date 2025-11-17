@@ -53,6 +53,13 @@ class ApplicationContainer(containers.DeclarativeContainer):
         ),
     )
     
+    http_server = providers.Singleton(
+        services.HttpServer,
+        host=config.http.host,
+        port=config.http.port,
+        debug=config.http.debug
+    )
+    
     notifier = providers.Singleton(
         services.Notifier,
         line_messaging_api_base_url=config.line_messaging_api_base_url,
@@ -101,7 +108,8 @@ async def bot(container: ApplicationContainer) -> None:
     )
     await asyncio.gather(
         container.batch().run(),
-        container.stream().run()
+        container.stream().run(),
+        container.http_server().run()
     )
 
 
@@ -125,6 +133,9 @@ def main() -> None:
     container.config.line_messaging_api_channel_token.from_env('LINE_MESSAGING_API_CHANNEL_TOKEN')
     container.config.line_messaging_api_destination_user_id.from_env('LINE_MESSAGING_API_DESTINATION_USER_ID')
     container.config.model_path.from_env('MODEL_PATH')
+    container.config.http.host.from_env('HTTP_HOST', '0.0.0.0')
+    container.config.http.port.from_env('HTTP_PORT', 8080)
+    container.config.http.debug.from_env('HTTP_DEBUG', False)
     
     container.wire()
     

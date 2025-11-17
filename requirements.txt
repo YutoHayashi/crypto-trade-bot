@@ -1,5 +1,6 @@
 boto3
 dependency-injector
+flask
 numpy
 pandas
 python-dotenv

@@ -9,6 +9,7 @@ from .position_book import Position, PositionBook
 from .portfolio import Portfolio
 from .data_store import DataStore
 from .handler_dispatcher import HandlerDispatcher
+from .http_server import HttpServer
 
 
 __all__ = [
@@ -26,4 +27,5 @@ __all__ = [
     'Portfolio',
     'DataStore',
     'HandlerDispatcher',
+    'HttpServer',
 ]
