@@ -9,7 +9,7 @@ from .batch_task import BatchTask
 
 
 class NotificationTask(BatchTask):
-    interval: int = 300  # 5 minutes
+    interval: int = 600  # 10 minutes
     
     last_collateral_history_id: int = None
     
