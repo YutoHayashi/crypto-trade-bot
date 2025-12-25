@@ -14,9 +14,7 @@ import batch_tasks
 import message_handlers
 import agents
 
-
-legal_currency_code = 'JPY'
-crypto_currency_code = 'FX_BTC_JPY'
+from lob_transformer.module import LOBDatasetConfig
 
 
 class ApplicationContainer(containers.DeclarativeContainer):
@@ -118,17 +116,14 @@ def main() -> None:
     
     container = ApplicationContainer()
     
-    container.config.from_dict({
-        'legal_currency_code': legal_currency_code,
-        'crypto_currency_code': crypto_currency_code,
-        'data_store_size': 120,
-    })
-    
+    container.config.s3_bucket.from_env('S3_BUCKET')
+    container.config.legal_currency_code.from_env('LEGAL_CURRENCY_CODE')
+    container.config.crypto_currency_code.from_env('CRYPTO_CURRENCY_CODE')
+    container.config.data_store_size.from_env('DATA_STORE_SIZE')
     container.config.bitflyer_websocket_url.from_env('BITFLYER_WEBSOCKET_URL')
     container.config.bitflyer_api_base_url.from_env('BITFLYER_API_BASE_URL')
     container.config.bitflyer_api_key.from_env('BITFLYER_API_KEY')
     container.config.bitflyer_api_secret.from_env('BITFLYER_API_SECRET')
-    container.config.s3_bucket.from_env('S3_BUCKET')
     container.config.line_messaging_api_base_url.from_env('LINE_MESSAGING_API_BASE_URL')
     container.config.line_messaging_api_channel_token.from_env('LINE_MESSAGING_API_CHANNEL_TOKEN')
     container.config.line_messaging_api_destination_user_id.from_env('LINE_MESSAGING_API_DESTINATION_USER_ID')

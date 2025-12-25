@@ -28,5 +28,5 @@ class DataStore:
     
     def __init__(self,
                  max_size: int):
-        self.max_size = max_size
-        self._buffer = deque(maxlen=max_size)
+        self.max_size = int(max_size)
+        self._buffer = deque(maxlen=self.max_size)

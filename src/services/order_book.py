@@ -87,7 +87,7 @@ class OrderBook:
     
     async def flush(self):
         async with self.lock:
-            self._orders.clear()
+            self._orders = [order for order in self._orders if order.child_order_state == 'ACTIVE']
     
     def __len__(self):
         return len(self._orders)
